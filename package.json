@@ -1,6 +1,6 @@
 {
-  "name": "alejandra-villada-visual-v3",
-  "version": "3.0.0",
+  "name": "alejandra-villada-visual-v4",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
@@ -9,6 +9,7 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
+    "gsap": "^3.15.1",
     "next": "^15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

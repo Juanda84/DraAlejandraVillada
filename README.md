@@ -1,12 +1,12 @@
-# Dra. Alejandra Villada — réplica visual V3
+# Dra. Alejandra Villada — réplica visual V4 (animada)
 
-Proyecto de desarrollo **estático con Next.js**, basado en el mockup aprobado `docs/Mockup aprobado.png`. Diseño preparado para evaluar con la doctora en **un entorno privado de pruebas** antes de integrar fotografías clínicas, testimonios verificables y las funciones finales de publicación.
+Proyecto de desarrollo **estático con Next.js**, basado en el mockup aprobado `docs/Mockup aprobado.png`, con una capa de animación GSAP añadida sobre la maquetación ya aprobada en V3. Diseño preparado para evaluar con la doctora en **un entorno privado de pruebas** antes de integrar fotografías clínicas, testimonios verificables y las funciones finales de publicación.
 
 ## Archivos importantes
 
 - `src/content/sections.html`: estructura HTML editable sección por sección.
 - `src/app/globals.css`: sistema visual responsive (paleta y composiciones).
-- `src/components/SiteInteractions.tsx`: menú móvil, comparador visual, carrusel de destinos y envío del formulario.
+- `src/components/SiteInteractions.tsx`: menú móvil, comparador visual, carrusel de destinos, envío del formulario y todas las animaciones GSAP (entrada del hero, parallax, revelados al hacer scroll, acordeón del FAQ).
 - `public/icons/`: 15 iconos SVG originales, creados para la identidad.
 - `public/images/`: recursos visuales locales, foto original proporcionada por el usuario y material gráfico de concepto.
 - `vista-previa.html`: vista previa autónoma, contiene los recursos incrustados; no requiere instalar nada.
@@ -32,7 +32,7 @@ npm run check
 npm run build
 ```
 
-**Limitación de esta entrega:** no fue posible descargar dependencias npm para ejecutar una compilación completa en el entorno de generación. La composición está probada mediante la vista previa HTML en Chromium en escritorio y móvil, y el formulario fue comprobado con una apertura interceptada de WhatsApp; Next.js debe validarse con `npm run build` en tu computador o en Coolify.
+`npm run check` y `npm run build` se validaron sin errores para esta entrega, y la composición animada se probó en Chromium en escritorio y móvil (menú, acordeón FAQ, comparador antes/después, revelados por scroll).
 
 ## Desplegar en Coolify
 
@@ -52,6 +52,18 @@ npm run build
 - Confirmar con la doctora el alcance de la teleorientación y del seguimiento de alineadores internacionales.
 - Eliminar `noindex` únicamente después de la aprobación de contenidos y permisos.
 
-## Alcance de V3
+## Alcance de V4
 
-El objetivo es la **fidelidad visual estática** al mockup aprobado, con adaptación responsive. Los movimientos Three.js/GSAP se incorporarán en una etapa posterior, una vez aprobada esta maquetación.
+Sobre la fidelidad visual estática de V3 (ya aprobada), se añadió una capa de animación con **GSAP + ScrollTrigger**, respetando colores, tipografía y layout del mockup aprobado:
+
+- Entrada cinematográfica del hero (textos, iconos y botón en cascada, zoom suave de la imagen de fondo).
+- Parallax sutil del fondo del hero al hacer scroll.
+- Revelados (`fade + slide`) de cada sección al entrar en pantalla, con stagger en tarjetas de tratamientos, destinos, pasos del proceso e historias.
+- Tilt 3D de entrada en el mockup del laptop (sección de videollamada).
+- Barrido animado del comparador antes/después al llegar a la sección de resultados.
+- Acordeón de FAQ con apertura/cierre suave (en lugar del salto instantáneo nativo).
+- Menú móvil con transición de opacidad/deslizamiento y ícono hamburguesa animado a "X".
+- Micro-interacciones: brillo en botones, subrayado animado del menú, iconos de tratamientos con hover, insignia "+10 años" flotando.
+- Todas las animaciones respetan `prefers-reduced-motion: reduce` (se muestran directamente en su estado final, sin movimiento).
+
+`vista-previa.html` quedó **sin actualizar** (sigue reflejando la versión estática V3); la versión animada vive únicamente en el proyecto Next.js.
