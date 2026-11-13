@@ -1,6 +1,6 @@
 {
-  "name": "alejandra-villada-visual-v4",
-  "version": "4.0.0",
+  "name": "alejandra-villada-visual-v5",
+  "version": "5.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
