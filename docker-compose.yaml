@@ -3,12 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: web-alejandra-villada
+
     restart: unless-stopped
     expose:
       - "80"
-    ports:
-      - "${PORT:-80}:80"
+
     environment:
       - NODE_ENV=production
       - TZ=America/Bogota
