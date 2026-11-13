@@ -1,57 +1,29 @@
-# Dra. Alejandra Villada — réplica visual V3
+> ⚠️ **Versión histórica / superseded.** El sitio oficial ahora vive en el repositorio Next.js [Juanda84/DraAlejandraVillada](https://github.com/Juanda84/DraAlejandraVillada) (V5), que incorpora este mismo contenido y marca con fotos reales y animaciones. Esta carpeta se conserva como referencia pero no debe desplegarse.
 
-Proyecto de desarrollo **estático con Next.js**, basado en el mockup aprobado `docs/Mockup aprobado.png`. Diseño preparado para evaluar con la doctora en **un entorno privado de pruebas** antes de integrar fotografías clínicas, testimonios verificables y las funciones finales de publicación.
+# Dra. Alejandra Villada — Diseño de Sonrisa • Estética Dental
 
-## Archivos importantes
+Landing page de alta conversión para la **Dra. Alejandra Villada**, centrada en **Diseño de Sonrisa de Alta Estética** (*Lentes Cerámicos en Porcelana* y *Diseño en Resina de Alta Estética*) en Pereira, Colombia, con embudo **filtro anti-curiosos** previo a WhatsApp.
 
-- `src/content/sections.html`: estructura HTML editable sección por sección.
-- `src/app/globals.css`: sistema visual responsive (paleta y composiciones).
-- `src/components/SiteInteractions.tsx`: menú móvil, comparador visual, carrusel de destinos y envío del formulario.
-- `public/icons/`: 15 iconos SVG originales, creados para la identidad.
-- `public/images/`: recursos visuales locales, foto original proporcionada por el usuario y material gráfico de concepto.
-- `vista-previa.html`: vista previa autónoma, contiene los recursos incrustados; no requiere instalar nada.
-- `docker-compose.yml` y `Dockerfile`: archivos de despliegue para Coolify.
+---
 
-## Comportamiento comercial
+## Características Principales
 
-Todos los **CTA comerciales llevan a `#contacto`**. No hay número visible de WhatsApp, botón flotante ni enlaces directos a WhatsApp. El formulario solicita nombre, país, tratamiento e inquietud opcional y una confirmación de uso de datos; no pide teléfono.
+1. **Protagonismo en Diseño de Sonrisa**:
+   - Hero editorial con fotografía macro de Diseño de Sonrisa natural y secuencia visual de 3 etapas (*1. Diseño Digital 3D › 2. Prueba Mockup › 3. Tu nueva sonrisa*).
+   - Videollamada con vista previa de proporción áurea digital (`1.618:1`) en pantalla.
+   - **Bloque Protagonista** comparando **Lentes Cerámicos (Porcelana)** vs. **Resina de Alta Estética** (incluyendo tiempos estimados en Pereira para pacientes viajeros), seguido por una fila de tratamientos complementarios.
+   - Preguntas frecuentes orientadas a naturalidad, cero desgaste, prueba Mockup y estadía en Pereira.
 
-**Solo al completar y enviar el formulario**, se abre WhatsApp con un mensaje precargado dirigido al número configurado (`NEXT_PUBLIC_WHATSAPP_NUMBER`, por defecto `573116445913`). El paciente envía el mensaje desde su propia cuenta; el proyecto no guarda datos en una base de datos ni utiliza una API de WhatsApp.
+2. **Filtro Anti-Curiosos antes de WhatsApp (`+57 311 644 5913`)**:
+   - Ningún botón expone el enlace directo a WhatsApp sin calificación previa.
+   - Los **14 puntos de conversión** (incluidos el botón verde del footer y el botón flotante de WhatsApp) abren un **Modal de Pre-Valoración Clínica en una sola vista** con pre-selección inteligente según la tarjeta pulsada.
+   - Valida obligatoriamente: nombre real, teléfono con prefijo internacional, origen (local/nacional/exterior), ciudad/país, tratamiento deseado, plazo para iniciar, qué desea mejorar y casilla de confirmación antes de generar la ficha estructurada hacia WhatsApp.
 
-## Ejecutar localmente
+---
 
-```sh
-npm install
-npm run dev
-```
+## Cómo desplegar en Coolify
 
-Accede a http://localhost:3000. Antes de subir al servidor ejecuta:
-
-```sh
-npm run check
-npm run build
-```
-
-**Limitación de esta entrega:** no fue posible descargar dependencias npm para ejecutar una compilación completa en el entorno de generación. La composición está probada mediante la vista previa HTML en Chromium en escritorio y móvil, y el formulario fue comprobado con una apertura interceptada de WhatsApp; Next.js debe validarse con `npm run build` en tu computador o en Coolify.
-
-## Desplegar en Coolify
-
-1. Extrae el contenido de la carpeta del ZIP en la **raíz del repositorio**.
-2. Comprueba que `package.json`, `Dockerfile`, `docker-compose.yml` y `src/` quedan en la raíz.
-3. Haz commit y push a GitHub.
-4. En Coolify elige estrategia **Docker Compose**, fichero `docker-compose.yml`, servicio `frontend`, puerto interno `3000`.
-5. Configura el dominio de desarrollo y despliega. No se requiere montar volúmenes ni exponer el puerto 3000 al exterior.
-6. Protege el dominio de desarrollo mediante autenticación de acceso. `robots: noindex` **no reemplaza** un control de acceso.
-
-## Requisitos antes de publicar
-
-- Sustituir los textos de testimonios de muestra por testimonios reales autorizados.
-- Sustituir el comparador ilustrativo por casos y fotografías clínicas con autorización de publicación.
-- Verificar formación, títulos, experiencia y servicios efectivamente prestados.
-- Publicar la política de tratamiento de datos aplicable y validar el consentimiento real antes de activar captación pública.
-- Confirmar con la doctora el alcance de la teleorientación y del seguimiento de alineadores internacionales.
-- Eliminar `noindex` únicamente después de la aprobación de contenidos y permisos.
-
-## Alcance de V3
-
-El objetivo es la **fidelidad visual estática** al mockup aprobado, con adaptación responsive. Los movimientos Three.js/GSAP se incorporarán en una etapa posterior, una vez aprobada esta maquetación.
+1. Sube este proyecto a tu repositorio Git.
+2. En **Coolify**, crea un nuevo recurso seleccionando **Docker Compose** (`/docker-compose.yaml`) o **Dockerfile**.
+3. Verifica que el puerto expuesto sea `80` (incluye endpoint `/health` nativo para healthchecks de Coolify).
+4. Haz clic en **Deploy**.

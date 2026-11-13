@@ -1,25 +1,23 @@
-# Multi-stage build for Coolify (Dockerfile buildpack).
-FROM node:22-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+FROM nginx:1.27-alpine
 
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-ARG NEXT_PUBLIC_WHATSAPP_NUMBER=573116445913
-ENV NEXT_PUBLIC_WHATSAPP_NUMBER=${NEXT_PUBLIC_WHATSAPP_NUMBER}
-ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+LABEL maintainer="Dra. Alejandra Villada Web"
+LABEL description="Landing Page Dra. Alejandra Villada - Ortodoncista y Diseño de Sonrisa"
 
-FROM node:22-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=3000
-RUN addgroup -S -g 1001 nodejs && adduser -S -u 1001 nextjs
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-USER nextjs
-EXPOSE 3000
-CMD ["node", "server.js"]
+# Eliminar configuración por defecto de Nginx y copiar la optimizada para Coolify
+RUN rm -rf /etc/nginx/conf.d/default.conf /usr/share/nginx/html/*
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copiar los archivos estáticos de la web
+COPY index.html /usr/share/nginx/html/index.html
+COPY assets/ /usr/share/nginx/html/assets/
+
+# Permisos adecuados para Nginx
+RUN chmod -R 755 /usr/share/nginx/html
+
+EXPOSE 80
+
+# Healthcheck nativo para Coolify
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:80/health || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

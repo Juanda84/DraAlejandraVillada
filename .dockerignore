@@ -1,5 +1,6 @@
-node_modules
-.next
 .git
-*.log
-*.zip
+.gitignore
+.agents
+README.md
+assets/images/reference-full.jpg
+assets/images/doctora-section-ref.png
