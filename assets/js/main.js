@@ -259,15 +259,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const clinicWa = ['57', '311', '644', '5913'].join('');
 
       const messageLines = [
-        '✨ *SOLICITUD DE VALORACIÓN VIRTUAL — DRA. ALEJANDRA VILLADA* ✨',
+        `Hola, soy ${nameVal}. Completé el formulario de valoración virtual en la página web y me gustaría continuar mi valoración con ustedes.`,
         '',
-        `👤 *Nombre:* ${nameVal}`,
-        `🌎 *País de residencia:* ${countryVal}`,
-        `🦷 *Tratamiento de interés:* ${treatmentVal}`,
-        goalVal ? `🎯 *Qué le gustaría mejorar:* ${goalVal}` : null,
-        '',
-        'Hola equipo de la Dra. Alejandra Villada, completé el formulario de valoración virtual en la página web y me gustaría continuar mi valoración con ustedes.'
-      ].filter(Boolean);
+        '*Mi solicitud:*',
+        `- País de residencia: ${countryVal}`,
+        `- Tratamiento de interés: ${treatmentVal}`,
+        goalVal ? `- Qué me gustaría mejorar: ${goalVal}` : null
+      ].filter((line) => line !== null);
 
       const waUrl = `https://wa.me/${clinicWa}?text=${encodeURIComponent(messageLines.join('\n'))}`;
 
