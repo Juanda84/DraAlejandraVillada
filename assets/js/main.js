@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const fCountry = document.getElementById('leadCountry');
   const fTreatment = document.getElementById('leadTreatment');
   const fGoal = document.getElementById('leadGoal');
-  const fConfirm = document.getElementById('leadConfirm');
 
   // Scroll any WhatsApp/CTA button straight to the form at the end of the page
   scrollToFormBtns.forEach((btn) => {
@@ -221,9 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (group) group.classList.remove('has-error');
   };
 
-  [fName, fCountry, fTreatment, fConfirm].forEach((el) => {
+  [fName, fCountry, fTreatment].forEach((el) => {
     if (!el) return;
-    const evtName = el.tagName === 'SELECT' || el.type === 'checkbox' ? 'change' : 'input';
+    const evtName = el.tagName === 'SELECT' ? 'change' : 'input';
     el.addEventListener(evtName, () => clearFieldError(el));
   });
 
@@ -237,7 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const countryVal = fCountry.value;
       const treatmentVal = fTreatment.value;
       const goalVal = fGoal.value.trim();
-      const confirmed = fConfirm.checked;
 
       // 1. Validate Name (min 3 chars, must contain letters)
       if (nameVal.length < 3 || !/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(nameVal)) {
@@ -248,12 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // 2. Validate Country
       if (!countryVal) {
         setFieldError(fCountry);
-        isValid = false;
-      }
-
-      // 3. Validate Confirmation Checkbox
-      if (!confirmed) {
-        setFieldError(fConfirm);
         isValid = false;
       }
 
@@ -274,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `🦷 *Tratamiento de interés:* ${treatmentVal}`,
         goalVal ? `🎯 *Qué le gustaría mejorar:* ${goalVal}` : null,
         '',
-        'Hola equipo de la Dra. Alejandra Villada, completé el formulario de valoración virtual en la página web y me gustaría coordinar mi videollamada.'
+        'Hola equipo de la Dra. Alejandra Villada, completé el formulario de valoración virtual en la página web y me gustaría continuar mi valoración con ustedes.'
       ].filter(Boolean);
 
       const waUrl = `https://wa.me/${clinicWa}?text=${encodeURIComponent(messageLines.join('\n'))}`;
@@ -291,5 +283,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
+  }
+
+  // =========================================================================
+  // 7. HIDE THE FLOATING WHATSAPP BUTTON NEAR THE VALORACIÓN FORM
+  //    (avoids visual noise next to the form's own WhatsApp submit button)
+  // =========================================================================
+  const floatingWaBtn = document.querySelector('.floating-wa-trigger');
+  const formSectionEl = document.getElementById('contacto');
+
+  if (floatingWaBtn && formSectionEl && 'IntersectionObserver' in window) {
+    const floatingWaObserver = new IntersectionObserver(
+      ([entry]) => {
+        floatingWaBtn.classList.toggle('is-hidden', entry.isIntersecting);
+      },
+      { rootMargin: '0px 0px -10% 0px' }
+    );
+    floatingWaObserver.observe(formSectionEl);
   }
 });
