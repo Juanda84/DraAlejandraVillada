@@ -281,6 +281,17 @@ document.addEventListener('DOMContentLoaded', () => {
         prevalSuccessView.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
+      // Track the "enviar mensaje" click (Meta Pixel + Google Analytics)
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', { content_name: treatmentVal });
+      }
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          event_category: 'valoracion_form',
+          event_label: treatmentVal
+        });
+      }
+
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
   }
