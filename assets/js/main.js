@@ -280,13 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Track the "enviar mensaje" click (Meta Pixel + Google Analytics)
+      // No se envía el tratamiento de interés ni otros datos del paciente: es información de salud
+      // potencialmente sensible y no debe viajar a Meta/Google.
       if (typeof window.fbq === 'function') {
-        window.fbq('track', 'Contact', { content_name: treatmentVal });
+        window.fbq('track', 'Contact');
       }
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'generate_lead', {
-          event_category: 'valoracion_form',
-          event_label: treatmentVal
+          event_category: 'valoracion_form'
         });
       }
 
